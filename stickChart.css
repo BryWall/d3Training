@@ -45,10 +45,10 @@ body {
   }
 
   #linevalue {
-    stroke: #DDDBCB;
     stroke-dasharray: 3 6;
   }
-  #current , .difValue text, #currentValue{
+  #current , .diffValue, #currentValue, #currentValueText{
     fill: #DDDBCB;
   }
+
   

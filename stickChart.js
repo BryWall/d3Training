@@ -148,7 +148,6 @@ const barGroup = chart.selectAll(".bar")
   .attr("fill", (d,i) => `rgb(${i*20}, ${Math.round(i*20/2)},200)`);
 
 
-
 barGroup.
   on("mouseenter", (actual) => {
     const x = xScale(actual.language);
@@ -158,41 +157,53 @@ barGroup.
       .attr("text-anchor", "middle")
       .attr("x", x + 60)
       .attr("y", y + 20)
-      .attr("fill", "#fff")
-      .text(`${actual.language} : ${actual.value}`)
-    const value = chart.append("text")
-      .attr("id", "currentValue")
+      .text(`${actual.language} : ${actual.value}`);
+    const limit = chart.append('g')
+      .attr('id', 'limit');
+
+    limit.append("rect")
+      .attr("id", "currentRect")
+      .attr("width", 40)
+      .attr("height", 30)
+      .attr("x", -40)
+      .attr("y", y - 15)
+      .attr("fill", actual.color);
+
+    limit.append("text")
       .attr("text-anchor", "middle")
+      .attr("id","currentValue")
       .attr("x", -20)
-      .attr("y", y)
-      .attr("background-color", actual.color)
-      .text(`${actual.value}`)
+      .attr("y", y + 5)
+      .attr("fill", "#000")
+      .text(actual.value);
+    limit.append('line')
+      .attr('x1',0)
+      .attr('x2', width)
+      .attr('y1', y)
+      .attr('y2', y)
+      .attr('stroke', actual.color)
+      .attr('id','linevalue');
     d3.select("#chartContainer g").selectAll('.diffValue')
       .data(sample).enter()
       .append("text")
       .attr("class", "diffValue")
       .attr("text-anchor", "middle")
-      .attr("fill", "#fff")
-      .attr("y", d => yScale(d.value) - 20 )
+      .attr("y", d => yScale(d.value) + 20 )
       .attr("x", d => xScale(d.language)+ 60)
       .text(d => {if(d != actual){
         if(d.value>actual.value)
-          return `+ ${(d.value - actual.value).toFixed(2)} %`;
-        return `${(d.value - actual.value).toFixed(2)} %`;
+          return `+ ${(d.value - actual.value).toFixed(1)} %`;
+        return `${(d.value - actual.value).toFixed(1)} %`;
       } 
-        })
-    chart.append('line')
-      .attr('x1',0)
-      .attr('x2', width)
-      .attr('y1', y)
-      .attr('y2', y)
-      .attr('id','linevalue')
+        });
+    
       
 
   })
   .on("mouseleave", (actual, i) => {
     d3.select("#current").remove();
     d3.select("#currentValue").remove();
+    d3.select("#limit").remove();
     d3.select("#chartContainer g").selectAll('.diffValue').remove();
     chart.selectAll("#linevalue").remove();
   })
