@@ -136,11 +136,17 @@ chart.selectAll("y axis")
   .attr("stroke","#fff");
   
 
-
-const barGroup = chart.selectAll(".bar")
+  const barGroup = chart.selectAll(".bar")
   .data(sample).enter()
+  .append('g')
+  .attr('class', 'barContainer');
+
+  barGroup
   .append("rect") // Uses the enter().append() method
   .attr("class", "bar") // Assign a class for styling
+  .transition()
+  .duration(300)
+  .delay((_, i) => i * 70)
   .attr("x", d => xScale(d.language))
   .attr("y", d => yScale(d.value))
   .attr("width", xScale.bandwidth())
