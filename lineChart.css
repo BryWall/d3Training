@@ -1,0 +1,37 @@
+body {
+  background-color:#09d100;
+}
+
+.line {
+  stroke: #fff;
+  fill: none;
+  stroke-width: 2px;
+}
+
+.dot {
+  stroke: #fff;
+  fill: #09d100;
+  stroke-width: 2px;
+}
+
+
+.axis path {
+  stroke: #fff;
+}
+
+.tick {
+  color: #fff;
+}
+
+.cross {
+  stroke: #DDDBCB;
+  stroke-dasharray: 3 6;
+}
+
+.horizontalGrid{
+  stroke: #DDDBCB;
+}
+
+.verticalGrid{
+  stroke: #DDDBCB;
+}
